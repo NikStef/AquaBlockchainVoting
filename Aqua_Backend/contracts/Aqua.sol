@@ -12,18 +12,12 @@ contract Aqua {
         string name;
         uint256 voteCount;
         address candidateAddress;
-        bool exists;
     }
-    event CandidateCreate(
-        uint256 indexed candidateId,
-        string name,
-        uint256 voteCount,
-        address _address
-    );
 
     address[] public candidateAddress;
 
-    mapping(address => Candidate) public candidates;
+    mapping(uint => Candidate) public prop;
+
     //Candidate Data ---END---
 
     //Voter Data ---START---
@@ -31,23 +25,14 @@ contract Aqua {
         uint256 voterId;
         string voter_name;
         address voter_address;
-        uint256 voter_allowed;
         bool voter_voted;
         uint256 voter_vote1;
         uint256 voter_vote2;
     }
-    event VoterCreated(
-        uint256 indexed voterId,
-        string voter_name,
-        address voter_address,
-        uint256 voter_allowed,
-        bool voter_voted,
-        uint256 voter_vote1,
-        uint256 voter_vote2
-    );
+
     address[] private votedVoters;
     address[] private voterAddress;
-    mapping(address => Voter) public voters;
+    mapping(address => Voter) private voters;
 
     //Voter Data ---END---
     constructor() {
@@ -68,28 +53,21 @@ contract Aqua {
         address _address,
         string memory _name
     ) public onlyInitiator {
-        require(
-            !(candidates[_address].candidateAddress == _address),
-            "The same candidate exists"
-        );
+        for (uint i = 0; i < candidateAddress.length; i++) {
+            if (candidateAddress[i] == _address) {
+                revert();
+            }
+        }
 
-        Candidate storage candidate = candidates[_address];
+        Candidate_Id++;
+
+        Candidate storage candidate = prop[Candidate_Id];
 
         candidate.candidateId = Candidate_Id;
         candidate.name = _name;
         candidate.voteCount = 0;
         candidate.candidateAddress = _address;
-
         candidateAddress.push(_address);
-
-        Candidate_Id++;
-
-        emit CandidateCreate(
-            Candidate_Id,
-            _name,
-            candidate.voteCount,
-            _address
-        );
     }
 
     function getCandidateLength() public view returns (uint256) {
@@ -97,15 +75,11 @@ contract Aqua {
     }
 
     //--Voter--
-    function voterRight(
+    function setVoter(
         address _address,
         string memory _name
     ) public onlyInitiator {
         Voter storage voter = voters[_address];
-
-        require(voter.voter_allowed == 0);
-
-        voter.voter_allowed = 1;
 
         voter.voter_name = _name;
         voter.voter_address = _address;
@@ -113,37 +87,34 @@ contract Aqua {
         voter.voter_vote1 = 1000; //Edo tha mpei to id aytou pou pshfhse
         voter.voter_vote2 = 1000;
         voter.voter_voted = false;
-
         voterAddress.push(_address);
 
         Voter_Id++;
-
-        emit VoterCreated(
-            Voter_Id,
-            _name,
-            _address,
-            voter.voter_allowed,
-            voter.voter_voted,
-            voter.voter_vote1,
-            voter.voter_vote2
-        );
     }
 
     function vote(
-        address _candidate1Address,
         uint256 _candidate1VoteId,
-        address _candidate2Address,
         uint256 _candidate2VoteId
     ) external {
         Voter storage voter = voters[msg.sender];
 
         require(!voter.voter_voted, "You have already voted");
-        require(voter.voter_allowed != 0, "You have no right to vote");
+        if (!(_candidate1VoteId == _candidate2VoteId)) {
+            voter.voter_vote1 = _candidate1VoteId;
+            prop[_candidate1VoteId].voteCount =
+                prop[_candidate1VoteId].voteCount +
+                1;
 
-        voter.voter_vote1 = _candidate1VoteId;
-        candidates[_candidate1Address].voteCount += voter.voter_allowed;
-        voter.voter_vote2 = _candidate2VoteId;
-        candidates[_candidate2Address].voteCount += voter.voter_allowed;
+            voter.voter_vote2 = _candidate2VoteId;
+            prop[_candidate2VoteId].voteCount =
+                prop[_candidate2VoteId].voteCount +
+                1;
+        } else {
+            voter.voter_vote1 = _candidate1VoteId;
+            prop[_candidate1VoteId].voteCount =
+                prop[_candidate1VoteId].voteCount +
+                1;
+        }
 
         voter.voter_voted = true;
         votedVoters.push(msg.sender);
