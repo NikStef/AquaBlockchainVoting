@@ -1,5 +1,5 @@
 <p align="center">
-![Logo](AquaLogo.png)
+    <img width="200" src="Aqua_Frontend/img/AquaLogoTr" alt="logo">
 </p>
 ##[1.0.1]H βάση του Aqua:
     --[Backend]: ουσιασιικά περιέχει το contract και το deploy.js στα scripts απλά κάνει deploy σε όποιο από τα networks που έχω ορίσει στο hardhat.config.js. Αν το --network είναι με etherscan π.χ. goerli test net το κάνει και verify.
