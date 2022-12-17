@@ -7,6 +7,12 @@ contract Aqua {
     uint256 private Voter_Id = 0;
     address private vacant;
 
+    uint256[] private endingVoteCounts;
+    uint pseudo_winnerVoteCount = 0;
+    uint _winner1 = 0;
+    uint _winner2 = 0;
+    uint256[] private winners;
+
     enum Period {
         Initialize,
         Register,
@@ -152,20 +158,36 @@ contract Aqua {
     }
 
     function getVotedVoterList() public view returns (address[] memory) {
-        //require(period == Period.End,"It's not the ending period");
+        require(period == Period.End, "It's not the ending period");
         return votedVoters;
     }
 
-    function getWinner() public view onlyInitiator returns (Candidate memory) {
+    function getWinner() public onlyInitiator returns (uint[] memory) {
         require(period == Period.End, "It's not the ending period");
-        uint winnerVoteCount = 0;
-        uint _winner = 0;
         for (uint x = 0; x < candidateAddress.length; x++) {
-            if (candidates[x].voteCount > winnerVoteCount) {
-                winnerVoteCount = candidates[x].voteCount;
-                _winner = x;
+            endingVoteCounts.push(candidates[x].voteCount);
+            if (candidates[x].voteCount > pseudo_winnerVoteCount) {
+                pseudo_winnerVoteCount = candidates[x].voteCount;
+                _winner1 = x;
             }
         }
-        return candidates[_winner];
+        winners.push(_winner1);
+        pseudo_winnerVoteCount = 0;
+        endingVoteCounts[_winner1] = 0;
+        for (uint x = 0; x < candidateAddress.length; x++) {
+            if (endingVoteCounts[x] > pseudo_winnerVoteCount) {
+                pseudo_winnerVoteCount = endingVoteCounts[x];
+                _winner2 = x;
+            }
+        }
+        winners.push(_winner2);
+        return winners;
+    }
+
+    function getInformation(
+        uint256 _index
+    ) public view onlyInitiator returns (Candidate memory) {
+        require(period == Period.End, "It's not the ending period");
+        return candidates[_index];
     }
 }
