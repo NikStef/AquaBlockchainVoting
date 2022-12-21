@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox")
 require("dotenv").config()
 require("@nomiclabs/hardhat-etherscan")
-PRIVATE_KEY_GANACHE
+
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 const PRIVATE_KEY_GANACHE = process.env.PRIVATE_KEY_GANACHE
@@ -16,7 +16,7 @@ module.exports = {
             chainId: 5,
         },
         localhostgn: {
-            url: "http://172.26.80.1:7545",
+            url: "http://172.28.128.1:7545",
             accounts: [PRIVATE_KEY_GANACHE],
             chainId: 1337,
         },

@@ -7,6 +7,8 @@ contract Aqua {
     uint256 private Voter_Id = 0;
     address private vacant;
 
+    uint256 private white;
+
     uint256[] private endingVoteCounts;
     uint pseudo_winnerVoteCount = 0;
     uint _winner1 = 0;
@@ -164,6 +166,8 @@ contract Aqua {
 
     function getWinner() public onlyInitiator returns (uint[] memory) {
         require(period == Period.End, "It's not the ending period");
+        white = candidates[0].voteCount;
+        candidates[0].voteCount = 0;
         for (uint x = 0; x < candidateAddress.length; x++) {
             endingVoteCounts.push(candidates[x].voteCount);
             if (candidates[x].voteCount > pseudo_winnerVoteCount) {

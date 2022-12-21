@@ -62,7 +62,7 @@ $today = date("m.d.y");
   <a href="u_index.php"><img src="img/AquaLogo.png"style="width:220px; height:100px;"></a>
   <b>Καλωσόρισες,<?php echo $username;?>.</b>
   <a href="">Καταχώρηση Ψήφου</a>
-  <a href="">Αρχικοποίηση Ψηφοφορίας</a>
+  <a href="init_voting.php">Ρυθμίσεις Ψηφοφορίας</a>
   <a href="restart.php">Αποσύνδεση</a>
 </div>
 
