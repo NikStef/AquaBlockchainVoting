@@ -18,4 +18,4 @@
 <h2><vr style="color:violet;">Version 1.1.1</vr>:</h2>
     <h3><p>Διωρθόθηκε το bug που αν ήταν οι λευκοί ψήφοι περισσότεροι εφμανίζεται σαν νικητής το κενό</p><p></p></h3>
     <h3><p>Προχώρησε λίγο το Frontend με php αλλά δεν μπορώ να συνδέσω το contract με το frontend</p><p></p></h3>
-    <h3><p>Δεν μπορώ να προχωρήσω με raw javascript-html-php θα προσπαθήσω να κοιτάξω NextJs/React και Web3</p><p></p></h3>
+    <h3><p>Δεν μπορώ να προχωρήσω με raw javascript-html-php θα προσπαθήσω να κοιτάξω το Web3.js</p><p></p></h3>
