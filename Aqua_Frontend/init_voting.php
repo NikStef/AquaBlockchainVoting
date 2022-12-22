@@ -9,12 +9,77 @@ body  {
   background-position: center;  
 }
 
+ body {font-family: Arial, Helvetica, sans-serif;}
+
+
+.setfunctions{
+  margin-top:30px;
+  margin-left: 200px;
+  margin-bottom: 30px;  
+}
+
+.viewfunctions{
+  margin-top:5px;
+  margin-left: 200px;
+  margin-bottom: 5px;  
+}
+.changestatefunctions{
+  margin-top:5px;
+  margin-left: 200px;
+  margin-bottom: 5px;  
+}
+.title{
+  margin-left: 150px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+input[type=text]{
+  margin-left: 150px;
+  width: 50%;
+  padding: 12px 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box; 
+}
+
+button {
+	width: 10%;
+	margin-left: 50px;  
+	
+	color: white;
+	padding: 10px 21px;
+	border: none;
+	cursor: pointer;
+	
+}
+
+fieldset {
+    border: none;
+}
+
+button[type=button1]{
+  background-color: #EA8A15;
+}
+button[type=button2]{
+  background-color: #1562EA;
+}
+button[type=button3]{
+  background-color: #B70EDD;
+}
+button:hover {
+  opacity: 0.8;
+}
+
+
 </style>
+
 </head>
 <body>
 <?php include 'u_map_aqua.php';?>
 
-<button id="setCandidateButton">Set Candidate</button>
+<!-- <button id="setCandidateButton">Set Candidate</button>
 <label for ="setCandidate">Address</label>
 <input id="_addressCandidate" placeholder="0x00"/>
 <input id="_nameCandidate" placeholder="Name"/>
@@ -23,8 +88,51 @@ body  {
 <label for ="setVoter">Address</label>
 <input id="_addressVoter" placeholder="0x00"/>
 <input id="_nameVoter" placeholder="Name"/>
+<button id="ChangePeriod">ChangePrd</button>
+<button id="Winner">Winner</button> 
+ -->
 
-<button id="CandidateLength">CandidateLength</button>
+
+ <fieldset id="set-only">
+    <div class="setfunctions">
+      <div class=title>Λειτουργίες Καταχώρησης</div>
+      <input type="text" id="_nameCandidate" placeholder="Όνομα Υποψηφίου"/>
+      <input type="text" id="_addressCandidate" placeholder="Διεύθυνση Υποψηφίου π.χ. 0x0000000000000000000000000000000000000000"/>
+      <button type="button1" id="setCandidateButton">Set Candidate</button>
+    </div>
+    <div class="setfunctions">
+      <input type="text" id="_nameVoter" placeholder="Όνομα Ψηφοφόρου"/>
+      <input type="text" id="_addressVoter" placeholder="Διεύθυνση Ψηφοφόρου π.χ. 0x0000000000000000000000000000000000000000"/>
+      <button type="button1" id="setVoterButton">Set Voter</button>  
+		</div>
+    </fieldset>
+
+    <fieldset id="view-only">
+      <div class="viewfunctions">
+        <div class=title>Λειτουργίες Read-only</div>
+        <input type = "text" name ="candidatelengthresult" id = "candidatelengthresult" placeholder="O αριθμός των υποψηφίων είναι... "  onkeydown="return false;">
+        <button type="button2" id="CandidateLength">CandidateLength</button>
+      </div>
+      <div class="viewfunctions">
+        <input type = "text" name ="voterlengthresult" id = "voterlengthresult" placeholder="O αριθμός των ψηφοφώρων είναι... "  onkeydown="return false;">
+        <button type="button2" id="VoterLength">VoterLength</button> 
+      </div>
+    </fieldset>
+    
+    <fieldset id="change-only">
+    <div class="changestatefunctions">
+      <div class=title>Λειτουργίες Αλλαγής Κατάστασης</div>
+      <input type = "text" name ="changeperiod" id = "changeperiod" placeholder="Αλλαγή Κατάστασης Ψηφοφορίας "  onkeydown="return false;">
+      <button type="button3" id="ChangePeriod">ChangePeriod</button>
+    </div>
+    <div class="changestatefunctions">
+      <input type = "text" name ="winnersresult" id = "winnersresult" placeholder="Οι νικηρές της ψηφοφορίας είναι... "  onkeydown="return false;">
+      <button type="button3" id="Winner">Results</button> 
+		</div>
+    </fieldset>
+
+
+   
 </body>
 <script src = "./init-voting.js" type="module"></script>
 </html>
