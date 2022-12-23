@@ -12,6 +12,11 @@ body  {
  body {font-family: Arial, Helvetica, sans-serif;}
 
 
+ h1{
+  text-align: center;
+  color: red;
+ }
+ 
 .setfunctions{
   margin-top:30px;
   margin-left: 200px;
@@ -101,7 +106,6 @@ button:hover {
       <button type="button1" id="setCandidateButton">Set Candidate</button>
     </div>
     <div class="setfunctions">
-      <input type="text" id="_nameVoter" placeholder="Όνομα Ψηφοφόρου"/>
       <input type="text" id="_addressVoter" placeholder="Διεύθυνση Ψηφοφόρου π.χ. 0x0000000000000000000000000000000000000000"/>
       <button type="button1" id="setVoterButton">Set Voter</button>  
 		</div>
@@ -114,8 +118,12 @@ button:hover {
         <button type="button2" id="CandidateLength">CandidateLength</button>
       </div>
       <div class="viewfunctions">
-        <input type = "text" name ="voterlengthresult" id = "voterlengthresult" placeholder="O αριθμός των ψηφοφώρων είναι... "  onkeydown="return false;">
+        <input type = "text" name ="voterlengthresult" id = "voterlengthresult" placeholder="O αριθμός των ψηφοφόρων είναι... "  onkeydown="return false;">
         <button type="button2" id="VoterLength">VoterLength</button> 
+      </div>
+      <div class="viewfunctions">
+        <input type = "text" name ="periodResult" id = "periodResult" placeholder="Στάδιο ψηφοφορίας... "  onkeydown="return false;">
+        <button type="button2" id="period">Περίοδος</button> 
       </div>
     </fieldset>
     
@@ -130,6 +138,7 @@ button:hover {
       <button type="button3" id="Winner">Results</button> 
 		</div>
     </fieldset>
+    <h1 id=error_code></h1>
 
 
    

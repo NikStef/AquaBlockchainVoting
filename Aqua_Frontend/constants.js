@@ -1,4 +1,4 @@
-export const contractAddress = "0xA6C3F3a48aA0CBb47613F31809B0370676b37728"
+export const contractAddress = "0x5846Ef8b1134c4CD62E5Ca06DD2275d6C4d582F3"
 export const abi = [
     {
         inputs: [],
@@ -20,6 +20,25 @@ export const abi = [
                 internalType: "uint256",
                 name: "",
                 type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_index",
+                type: "uint256",
+            },
+        ],
+        name: "getCandidateName",
+        outputs: [
+            {
+                internalType: "string",
+                name: "",
+                type: "string",
             },
         ],
         stateMutability: "view",
@@ -68,6 +87,19 @@ export const abi = [
     },
     {
         inputs: [],
+        name: "getState",
+        outputs: [
+            {
+                internalType: "enum Aqua.Period",
+                name: "",
+                type: "uint8",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
         name: "getVotedVoterList",
         outputs: [
             {
@@ -95,14 +127,27 @@ export const abi = [
     {
         inputs: [],
         name: "getWinner",
-        outputs: [
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
             {
-                internalType: "uint256[]",
-                name: "",
-                type: "uint256[]",
+                internalType: "uint256",
+                name: "_index",
+                type: "uint256",
             },
         ],
-        stateMutability: "nonpayable",
+        name: "getWinnersbyId",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
         type: "function",
     },
     {
@@ -129,11 +174,6 @@ export const abi = [
                 internalType: "address",
                 name: "_address",
                 type: "address",
-            },
-            {
-                internalType: "string",
-                name: "_name",
-                type: "string",
             },
         ],
         name: "setVoter",

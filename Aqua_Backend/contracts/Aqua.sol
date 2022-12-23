@@ -15,6 +15,8 @@ contract Aqua {
     uint _winner2 = 0;
     uint256[] private winners;
 
+    string[] private candidatesNames;
+
     enum Period {
         Initialize,
         Register,
@@ -39,7 +41,6 @@ contract Aqua {
     //Voter Data ---START---
     struct Voter {
         uint256 voterId;
-        string voter_name;
         uint256 voter_allowed;
         address voter_address;
         bool voter_voted;
@@ -57,6 +58,7 @@ contract Aqua {
         i_votingInitiator = msg.sender;
         period = Period.Register;
         candidateAddress.push(vacant);
+        candidatesNames.push("");
     }
 
     modifier onlyInitiator() {
@@ -66,6 +68,9 @@ contract Aqua {
 
     //Functions
     function changePeriod() public onlyInitiator {
+        if (uint(period) == 3) {
+            revert("You are in the last stage");
+        }
         period = Period(uint(period) + 1);
     }
 
@@ -78,7 +83,7 @@ contract Aqua {
 
         for (uint i = 0; i < candidateAddress.length; i++) {
             if (candidateAddress[i] == _address) {
-                revert();
+                revert("Candidate already exists");
             }
         }
 
@@ -91,6 +96,8 @@ contract Aqua {
         candidate.voteCount = 0;
         candidate.candidateAddress = _address;
         candidateAddress.push(_address);
+
+        candidatesNames.push(_name);
     }
 
     function getCandidateLength() public view returns (uint256) {
@@ -98,19 +105,15 @@ contract Aqua {
     }
 
     //--Voter--
-    function setVoter(
-        address _address,
-        string memory _name
-    ) public onlyInitiator {
+    function setVoter(address _address) public onlyInitiator {
         require(period == Period.Register, "It's not the registration period");
         for (uint i = 0; i < voterAddress.length; i++) {
             if (voterAddress[i] == _address) {
-                revert();
+                revert("The voter already exists.");
             }
         }
         Voter storage voter = voters[_address];
 
-        voter.voter_name = _name;
         voter.voter_address = _address;
         voter.voterId = Voter_Id;
 
@@ -164,7 +167,7 @@ contract Aqua {
         return votedVoters;
     }
 
-    function getWinner() public onlyInitiator returns (uint[] memory) {
+    function getWinner() public onlyInitiator {
         require(period == Period.End, "It's not the ending period");
         white = candidates[0].voteCount;
         candidates[0].voteCount = 0;
@@ -185,7 +188,6 @@ contract Aqua {
             }
         }
         winners.push(_winner2);
-        return winners;
     }
 
     function getInformation(
@@ -193,5 +195,21 @@ contract Aqua {
     ) public view onlyInitiator returns (Candidate memory) {
         require(period == Period.End, "It's not the ending period");
         return candidates[_index];
+    }
+
+    function getWinnersbyId(
+        uint256 _index
+    ) public view onlyInitiator returns (uint) {
+        return winners[_index];
+    }
+
+    function getCandidateName(
+        uint256 _index
+    ) public view returns (string memory) {
+        return candidatesNames[_index];
+    }
+
+    function getState() public view returns (Period) {
+        return period;
     }
 }

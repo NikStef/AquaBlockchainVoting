@@ -54,14 +54,12 @@ $username = $_SESSION['session_username'];
 if(!($_SESSION['hasUser'])){
       header('Location: connect.php');  
 }
-date_default_timezone_set('Europe/Athens');
-$today = date("m.d.y");
 
 ?>
 <div id="mySidenav" class="sidenav">
   <a href="u_index.php"><img src="img/AquaLogo.png"style="width:220px; height:100px;"></a>
   <b>Καλωσόρισες,<?php echo $username;?>.</b>
-  <a href="">Καταχώρηση Ψήφου</a>
+  <a href="vote_voting.php">Καταχώρηση Ψήφου</a>
   <a href="init_voting.php">Ρυθμίσεις Ψηφοφορίας</a>
   <a href="restart.php">Αποσύνδεση</a>
 </div>
