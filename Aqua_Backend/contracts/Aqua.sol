@@ -7,15 +7,13 @@ contract Aqua {
     uint256 private Voter_Id = 0;
     address private vacant;
 
-    uint256 private white;
-
     uint256[] private endingVoteCounts;
     uint pseudo_winnerVoteCount = 0;
     uint _winner1 = 0;
     uint _winner2 = 0;
     uint256[] private winners;
-
-    string[] private candidatesNames;
+    uint8 private results = 0;
+    uint256 private totalVotes;
 
     enum Period {
         Initialize,
@@ -58,7 +56,6 @@ contract Aqua {
         i_votingInitiator = msg.sender;
         period = Period.Register;
         candidateAddress.push(vacant);
-        candidatesNames.push("");
     }
 
     modifier onlyInitiator() {
@@ -96,12 +93,6 @@ contract Aqua {
         candidate.voteCount = 0;
         candidate.candidateAddress = _address;
         candidateAddress.push(_address);
-
-        candidatesNames.push(_name);
-    }
-
-    function getCandidateLength() public view returns (uint256) {
-        return candidateAddress.length - 1;
     }
 
     //--Voter--
@@ -147,33 +138,43 @@ contract Aqua {
             candidates[_candidate2VoteId].voteCount =
                 candidates[_candidate2VoteId].voteCount +
                 1;
-        } else {
+        } else if (
+            (_candidate1VoteId == _candidate2VoteId) && (_candidate1VoteId == 0)
+        ) {
+            voter.voter_vote1 = 0;
+            voter.voter_vote2 = 0;
+            candidates[0].voteCount = candidates[0].voteCount + 1;
+        } else if (_candidate1VoteId == _candidate2VoteId) {
             voter.voter_vote1 = _candidate1VoteId;
             candidates[_candidate1VoteId].voteCount =
                 candidates[_candidate1VoteId].voteCount +
                 1;
+
+            voter.voter_vote2 = 0;
+            candidates[0].voteCount = candidates[0].voteCount + 1;
         }
 
         voter.voter_voted = true;
         votedVoters.push(msg.sender);
     }
 
-    function getVoterLength() public view returns (uint256) {
-        return voterAddress.length;
-    }
-
-    function getVotedVoterList() public view returns (address[] memory) {
-        require(period == Period.End, "It's not the ending period");
-        return votedVoters;
-    }
+    // function getVotedVoterList() public view returns (address[] memory) {
+    //     require(period == Period.End, "It's not the ending period");
+    //     return votedVoters;
+    // }
 
     function getWinner() public onlyInitiator {
         require(period == Period.End, "It's not the ending period");
-        white = candidates[0].voteCount;
-        candidates[0].voteCount = 0;
+        require(results == 0, "Already calculated");
+        // white = candidates[0].voteCount;
+        // candidates[0].voteCount = 0;
         for (uint x = 0; x < candidateAddress.length; x++) {
+            // if (!(x == 0)){endingVoteCounts.push(candidates[x].voteCount);}
             endingVoteCounts.push(candidates[x].voteCount);
-            if (candidates[x].voteCount > pseudo_winnerVoteCount) {
+            totalVotes = totalVotes + endingVoteCounts[x];
+            endingVoteCounts[0] = 0;
+
+            if ((endingVoteCounts[x] > pseudo_winnerVoteCount)) {
                 pseudo_winnerVoteCount = candidates[x].voteCount;
                 _winner1 = x;
             }
@@ -181,6 +182,7 @@ contract Aqua {
         winners.push(_winner1);
         pseudo_winnerVoteCount = 0;
         endingVoteCounts[_winner1] = 0;
+
         for (uint x = 0; x < candidateAddress.length; x++) {
             if (endingVoteCounts[x] > pseudo_winnerVoteCount) {
                 pseudo_winnerVoteCount = endingVoteCounts[x];
@@ -188,28 +190,43 @@ contract Aqua {
             }
         }
         winners.push(_winner2);
+        results = 1;
+    }
+
+    function getCandidateLength() public view returns (uint256) {
+        return candidateAddress.length - 1;
+    }
+
+    function getVoterLength() public view returns (uint256) {
+        return voterAddress.length;
     }
 
     function getInformation(
         uint256 _index
-    ) public view onlyInitiator returns (Candidate memory) {
+    ) public view returns (Candidate memory) {
         require(period == Period.End, "It's not the ending period");
         return candidates[_index];
     }
 
-    function getWinnersbyId(
-        uint256 _index
-    ) public view onlyInitiator returns (uint) {
-        return winners[_index];
+    function getState() public view returns (Period) {
+        return period;
     }
 
     function getCandidateName(
         uint256 _index
     ) public view returns (string memory) {
-        return candidatesNames[_index];
+        return candidates[_index].name;
     }
 
-    function getState() public view returns (Period) {
-        return period;
+    function isResults() public view returns (uint8) {
+        return results;
+    }
+
+    function getTotalVotes() public view returns (uint256) {
+        return totalVotes;
+    }
+
+    function getWinnersbyId(uint256 _index) public view returns (uint) {
+        return winners[_index];
     }
 }

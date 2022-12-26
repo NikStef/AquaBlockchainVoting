@@ -129,13 +129,13 @@ button:hover {
     
     <fieldset id="change-only">
     <div class="changestatefunctions">
-      <div class=title>Λειτουργίες Αλλαγής Κατάστασης</div>
+      <div class=title>Λειτουργίες Αλλαγής Κατάστασης </div>
       <input type = "text" name ="changeperiod" id = "changeperiod" placeholder="Αλλαγή Κατάστασης Ψηφοφορίας "  onkeydown="return false;">
-      <button type="button3" id="ChangePeriod">ChangePeriod</button>
+      <button type="button3" id="ChangePeriod">Επόμενη Περίοδο</button>
     </div>
     <div class="changestatefunctions">
       <input type = "text" name ="winnersresult" id = "winnersresult" placeholder="Οι νικηρές της ψηφοφορίας είναι... "  onkeydown="return false;">
-      <button type="button3" id="Winner">Results</button> 
+      <button type="button3" id="Winner">Αποτελέσματα</button> 
 		</div>
     </fieldset>
     <h1 id=error_code></h1>

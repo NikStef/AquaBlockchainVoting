@@ -146,7 +146,7 @@ async function ChangePrd() {
         const signer = provider.getSigner()
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            const contractResponse = await contract.changePeriod()
+            await contract.changePeriod()
         } catch (error) {
             //console.log("hiiiiiiii")
             //var particular_error = error.toString()
@@ -168,12 +168,10 @@ async function getWinner() {
         const signer = provider.getSigner()
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
-            const contractResponse = await contract.getWinner()
-            document.getElementById("change-only").elements[
-                "changeperiod"
-            ].value = `O αριθμός των ψηφοφόρων είναι:${contractResponse.toString()}`
+            await contract.getWinner()
+            window.location.href = "./results.php"
         } catch (error) {
-            //console.log(error.data.message)
+            //console.log(error)
             errorFinder(error)
         }
     }
@@ -188,6 +186,7 @@ async function errorFinder(particular_error) {
     var substr4 = "Candidate already exists"
     var substr5 = "The voter already exists."
     var substr6 = "You are in the last stage"
+    var substr7 = "Already calculated"
 
     // var p1
     // var p2
@@ -244,5 +243,9 @@ async function errorFinder(particular_error) {
     if (p1.includes(substr6)) {
         document.getElementById("error_code").innerHTML =
             "Είμαστε στη τελευταία περίοδο."
+    }
+    if (p1.includes(substr7)) {
+        document.getElementById("error_code").innerHTML =
+            "Τα αποτελέσματα έχουν ήδη υπολογιστεί."
     }
 }

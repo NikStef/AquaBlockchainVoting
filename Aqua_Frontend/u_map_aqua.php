@@ -42,27 +42,28 @@ body {
   display: block; // ana block 
 }
 
+gen{
+  font-weight: bold;
+  font-size: 18px;
+}
+
+b{
+  font-size: 15px;
+}
 
 
 </style>
 </head>
 <body>
-<?php
-
-$username = $_SESSION['session_username'];
-
-if(!($_SESSION['hasUser'])){
-      header('Location: connect.php');  
-}
-
-?>
 <div id="mySidenav" class="sidenav">
-  <a href="u_index.php"><img src="img/AquaLogo.png"style="width:220px; height:100px;"></a>
-  <b>Καλωσόρισες,<?php echo $username;?>.</b>
+  <a href="u_index.php" ><img id="logo" src="img/AquaLogo.png"style="width:220px; height:100px;"></a>
+  <b>Καλωσόρισες,<addresid id="addresid"></addresid></b>
+  <gen><a href="results.php" id="gen"></a></gen>
   <a href="vote_voting.php">Καταχώρηση Ψήφου</a>
   <a href="init_voting.php">Ρυθμίσεις Ψηφοφορίας</a>
   <a href="restart.php">Αποσύνδεση</a>
 </div>
 
 </body>
+<script src = "./u_map_aqua.js" type="module"></script>
 </html>

@@ -80,11 +80,11 @@ h2{
     <div class="votelistcandidates" style="overflow-x:hidden;"> 
     <h2>Ψηφοφορία Aqua</h2>
       <ul id="list" >
-        <li>0.Λευκή Ψήφος</li>
+        <li>0.Λευκό</li>
       </ul> 
     </div>
     <div class="votefunctions">
-      <div class=title>Συμπλήρωσε τα id των υποψηφίων που θές να ψηφίσεις, αν δεν θες να ψηφίσεις βάλε 0.</div>
+      <div class=title>Συμπλήρωσε τα id των υποψηφίων που θέλετε να εγκρίνεται, αν δεν θέλετε να εγκρίνεται κάποιον είσαγετε 0.</div>
       <input type="text" id="_id1" placeholder="Id του πρώτου υποψηφίου."/>
       <input type="text" id="_id2" placeholder="Id του δεύτερου υποψηφίου."/>
       <button type="button1" id="votes">Vote</button>

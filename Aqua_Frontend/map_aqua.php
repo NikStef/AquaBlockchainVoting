@@ -37,8 +37,8 @@ body {
 <body>
 <div id="mySidenav" class="sidenav">
   <a href="index.php"><img src="img/AquaLogo.png"style="width:220px; height:100px;"></a>
-  <a href="connect.php">Connect</a>
-  <a href="about.php">About</a>
+  <a href="connectMetamask.php">Είσοδος</a>
+  <a href="about.php">Οδηγίες</a>
 </div>
 
 </body>

@@ -17,7 +17,8 @@ async function getNames() {
         //const signer = provider.getSigner()
         const contract = new ethers.Contract(contractAddress, abi, provider)
         try {
-            const length = await contract.getCandidateLength()
+            let length = await contract.getCandidateLength()
+            length = length.toString()
             for (let count = 1; count <= length; count++) {
                 const id_candidate = await contract.getCandidateName(count)
                 var ul = document.getElementById("list")
