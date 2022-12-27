@@ -14,27 +14,27 @@ describe("Aqua", function () {
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should update 1->2 with change period function", async function () {
+    it("Should update period 1->2 with change period function", async function () {
         await Aqua.changePeriod()
         const currentValue = await Aqua.getState()
         const expectedValue = "2"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should update 2->3 with change period function", async function () {
+    it("Should update period 2->3 with change period function", async function () {
         await Aqua.changePeriod()
         await Aqua.changePeriod()
         const currentValue = await Aqua.getState()
         const expectedValue = "3"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Shouldn't update after 3 with change period function revert you are in the last stage", async function () {
+    it("Shouldn't update after 3 function calls of changePeriod function and should revert with you are in the last stage", async function () {
         await Aqua.changePeriod()
         await Aqua.changePeriod()
         await expect(Aqua.changePeriod()).to.be.revertedWith(
             "You are in the last stage"
         )
     })
-    it("Shouldn't update if not owner account is calling", async function () {
+    it("Shouldn't update the period if not owner account is calling", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).changePeriod()
@@ -70,7 +70,7 @@ describe("Aqua", function () {
             Aqua.setCandidate(owner.address, "Link")
         ).to.be.revertedWith("Candidate already exists")
     })
-    it("Shouldn't update the candidate list if not the owner is calling the function setCandidate", async function () {
+    it("Shouldn't update the candidate list if not the owner is calling the function setCandidate()", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).setCandidate(
@@ -159,7 +159,7 @@ describe("Aqua", function () {
             "It's not the voting period"
         )
     })
-    it("Shouldnt vote if he doesnt have a right to vote", async function () {
+    it("Shouldnt vote if doesnt have a right to vote", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setCandidate(user1.address, "Friv")
