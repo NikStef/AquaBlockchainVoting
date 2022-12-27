@@ -38,6 +38,8 @@
     <h3><p>Ολοκληρώθηκε το frontend μαζί με κάποια γραφικά.</p><p></p></h3>
     <h3><p>Προστέθηκάν στο συμβόλαιο revert για τα results για να τρέχει μία φορά,γιατί υπήρχε bug που χάλαγε τα ποσοστά ψήφων κάθε υποψηφίου.</p><p></p></h3>
     <h2 align="center" style="color:red;">[TODO]:</h2>
-        <h3><p>1)Τα tests του συμβολαίου στο backend.</p>
-        <h3><p>2)Να καθαρίσω τον κώδικα του frontend.</p>
-        
+        <h3><p>✓1)Τα tests του συμβολαίου στο backend.</p>
+<h2><vr style="color:violet;">Version 1.5.0</vr>:</h2>
+    <h3><p>Oλοκληρώθηκάν όλα τα tests 100% του συμβολαίου.</p><p></p></h3>
+    <h2 align="center" style="color:red;">[TODO]:</h2>
+        <h3><p>1)Να καθαρίσω τον κώδικα απο comments.</p>
