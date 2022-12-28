@@ -45,16 +45,13 @@ async function setCandidate() {
 async function setVoter() {
     document.getElementById("error_code").innerHTML = ""
     const address = document.getElementById("_addressVoter").value
-    //console.log("hi")
     if (typeof window.ethereum !== "undefined") {
-        // console.log(`trying to set ${address} as a voter with the name ${name}`)
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
             const contractResponse = await contract.setVoter(address)
         } catch (error) {
-            //console.log(error)
             errorFinder(error)
         }
     }
@@ -62,7 +59,6 @@ async function setVoter() {
 
 async function getCandidateLength() {
     document.getElementById("error_code").innerHTML = ""
-    //console.log(`Passing`)
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send("eth_requestAccounts", [])
@@ -70,18 +66,11 @@ async function getCandidateLength() {
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
             const length = await contract.getCandidateLength()
-            // console.log(length.toString())
-            // document.getElementById("CandidateLength").innerHTML =
-            //     length.toString()
 
             document.getElementById("view-only").elements[
                 "candidatelengthresult"
             ].value = `O αριθμός των υποψηφίων είναι:${length.toString()}`
-
-            // document.getElementById("candidatelengthresult").innerHTML =
-            //     length.toString()
         } catch (error) {
-            //console.log(error)
             console.log(error)
         }
     }
@@ -127,7 +116,6 @@ async function getVoterLength() {
         const contract = new ethers.Contract(contractAddress, abi, signer)
         try {
             const length = await contract.getVoterLength()
-            //console.log(length.toString())
             document.getElementById("view-only").elements[
                 "voterlengthresult"
             ].value = `O αριθμός των ψηφοφόρων είναι:${length.toString()}`
@@ -139,7 +127,6 @@ async function getVoterLength() {
 
 async function ChangePrd() {
     document.getElementById("error_code").innerHTML = ""
-    //console.log(`Passing`)
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send("eth_requestAccounts", [])
@@ -148,12 +135,6 @@ async function ChangePrd() {
         try {
             await contract.changePeriod()
         } catch (error) {
-            //console.log("hiiiiiiii")
-            //var particular_error = error.toString()
-            //errorFinder(particular_error)
-            //const substr = "User denied transaction"
-            // console.log(error.includes(substr))
-            //console.log(error)
             errorFinder(error)
         }
     }
@@ -161,7 +142,6 @@ async function ChangePrd() {
 
 async function getWinner() {
     document.getElementById("error_code").innerHTML = ""
-    //console.log(`Passing`)
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send("eth_requestAccounts", [])
@@ -171,14 +151,12 @@ async function getWinner() {
             await contract.getWinner()
             window.location.href = "./results.php"
         } catch (error) {
-            //console.log(error)
             errorFinder(error)
         }
     }
 }
 
 async function errorFinder(particular_error) {
-    //const substr = "User denied transaction"
     var substr0 = "User denied"
     var substr1 = "It's not the ending period"
     var substr2 = "Only initiator"
@@ -187,17 +165,6 @@ async function errorFinder(particular_error) {
     var substr5 = "The voter already exists."
     var substr6 = "You are in the last stage"
     var substr7 = "Already calculated"
-
-    // var p1
-    // var p2
-
-    // if ((p1 = particular_error.data.message)) {
-    //     p1 = particular_error.data.message
-    // }
-
-    // if ((p2 = particular_error.message)) {
-    //     p2 = particular_error.message
-    // }
 
     try {
         var p1 = particular_error.data.message
@@ -219,14 +186,10 @@ async function errorFinder(particular_error) {
     if (p1.includes(substr1)) {
         document.getElementById("error_code").innerHTML =
             "Δεν είναι η περίοδος λήξης."
-        //console.log("Δεν είναι η περίοδος λήξης.")
     }
     if (p1.includes(substr2)) {
         document.getElementById("error_code").innerHTML =
             "Mόνο αυτός που έκανε deploy το συμβόλαιο έχει αυτό το δικαίωμα."
-        // console.log(
-        //     "Mόνο αυτός που έκανε deploy το συμβόλαιο έχει αυτό το δικαίωμα."
-        // )
     }
     if (p1.includes(substr3)) {
         document.getElementById("error_code").innerHTML =

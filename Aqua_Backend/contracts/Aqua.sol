@@ -110,7 +110,7 @@ contract Aqua {
 
         voter.voter_allowed = 1;
 
-        voter.voter_vote1 = 1000; //Edo tha mpei to id aytou pou pshfhse
+        voter.voter_vote1 = 1000;
         voter.voter_vote2 = 1000;
         voter.voter_voted = false;
         voterAddress.push(_address);
@@ -158,18 +158,10 @@ contract Aqua {
         votedVoters.push(msg.sender);
     }
 
-    // function getVotedVoterList() public view returns (address[] memory) {
-    //     require(period == Period.End, "It's not the ending period");
-    //     return votedVoters;
-    // }
-
     function getWinner() public onlyInitiator {
         require(period == Period.End, "It's not the ending period");
         require(results == 0, "Already calculated");
-        // white = candidates[0].voteCount;
-        // candidates[0].voteCount = 0;
         for (uint x = 0; x < candidateAddress.length; x++) {
-            // if (!(x == 0)){endingVoteCounts.push(candidates[x].voteCount);}
             endingVoteCounts.push(candidates[x].voteCount);
             totalVotes = totalVotes + endingVoteCounts[x];
             endingVoteCounts[0] = 0;

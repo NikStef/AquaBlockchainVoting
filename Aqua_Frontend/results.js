@@ -30,11 +30,9 @@ var yValues = []
 var barColors = []
 
 async function genesisWinners() {
-    //console.log("hiiiii")
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send("eth_requestAccounts", [])
-        //const signer = provider.getSigner()
         const contract = new ethers.Contract(contractAddress, abi, provider)
         try {
             const winner1 = await contract.getWinnersbyId(0)
@@ -67,13 +65,10 @@ async function genesis() {
             let totalVotes = await contract.getTotalVotes()
             totalVotes = parseInt(totalVotes._hex, 16)
 
-            //console.log(totalVotes)
             for (let count = 0; count <= length; count++) {
                 const information = await contract.getInformation(count)
 
                 const random = Math.floor(Math.random() * colours.length)
-                //console.log(random, colours[random])
-                //let name = `${count}.${information.name}`
                 let name = `${information.name}:`
 
                 if (count == 0) {
@@ -83,18 +78,14 @@ async function genesis() {
                 xValues.push(name)
                 yValues.push(votecount)
                 barColors.push(colours[random])
-                //console.log(name, votecount)
                 let percentofVotes = `${Math.round(
                     (votecount * 100) / totalVotes
                 )}%`
-                //console.log(name, votecount, percentofVotes)
                 var table = document.getElementById("poll")
-                //for (let count2 = 0; count2 <= 3; count2++) {}
                 var td = document.createElement("td")
                 td.appendChild(document.createTextNode(name))
                 td.setAttribute("class", "democlass")
                 table.appendChild(td)
-                //document.getElementById("myH1").setAttribute("class", "democlass");
                 var td = document.createElement("td")
                 td.appendChild(document.createTextNode(votecount))
                 table.appendChild(td)

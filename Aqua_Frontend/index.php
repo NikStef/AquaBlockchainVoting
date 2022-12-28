@@ -8,11 +8,6 @@ body  {
   background-attachment: fixed;
   background-position: center;  
 }
-f{
-	color: blue;
-}
-
-
 </style>
 </head>
 <body>

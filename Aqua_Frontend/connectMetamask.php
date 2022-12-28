@@ -30,10 +30,7 @@ h3{
 </head>
 <body>
 <?php include 'map_aqua.php';?>
-<!-- <?php session_start();
-// if(!($_SESSION['hasUser'])){
-//     header('Location: connect.php');  
-// }?> -->
+
 
 
 <button  id="connectButton">Συνδεση στο Metamask</button>

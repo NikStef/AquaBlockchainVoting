@@ -1,7 +1,6 @@
 // imports
 const { ethers, run, network } = require("hardhat")
 
-// async main
 async function main() {
     const AquaFactory = await ethers.getContractFactory("Aqua")
     console.log("Deploying contract...")
@@ -17,7 +16,6 @@ async function main() {
     }
 }
 
-// async function verify(contractAddress, args) { allos tropos g to async function
 const verify = async (contractAddress, args) => {
     console.log("Verifying contract...")
     try {
@@ -34,7 +32,6 @@ const verify = async (contractAddress, args) => {
     }
 }
 
-// main
 main()
     .then(() => process.exit(0))
     .catch((error) => {

@@ -6,15 +6,11 @@ votes.onclick = vote
 
 window.addEventListener("load", getNames)
 
-// const applyids = document.getElementById("applyids")
-// applyids.onclick = getNames
-
 async function getNames() {
     if (typeof window.ethereum !== "undefined") {
         //var count = 1
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send("eth_requestAccounts", [])
-        //const signer = provider.getSigner()
         const contract = new ethers.Contract(contractAddress, abi, provider)
         try {
             let length = await contract.getCandidateLength()
@@ -36,7 +32,6 @@ async function getNames() {
 
 async function vote() {
     document.getElementById("error_code").innerHTML = ""
-    //console.log("no idea")
     const id_1vote = document.getElementById("_id1").value
     const id_2vote = document.getElementById("_id2").value
     if (typeof window.ethereum !== "undefined") {
@@ -64,28 +59,20 @@ async function errorFinder(particular_error) {
         var p2 = particular_error.message
     } catch {}
 
-    // console.log(particular_error)
-    // console.log(p1)
-    // console.log(p2)
-
     if (p2.includes(substr0)) {
         document.getElementById("error_code").innerHTML =
             "Ο χρήστης απέρριψε την συναλλαγή."
-        //console.log("Ο χρήστης απέρριψε την συναλλαγή.")
     }
     if (p1.includes(substr1)) {
         document.getElementById("error_code").innerHTML =
             "Δεν είναι η περίοδος ψηφοφορίας."
-        //console.log("Δεν είναι η περίοδος ψηφοφορίας.")
     }
     if (p1.includes(substr2)) {
         document.getElementById("error_code").innerHTML =
             "Έχεις ήδη ξαναψηφίσει."
-        //console.log("Έχεις ήδη ξαναψηφίσει.")
     }
     if (p1.includes(substr3)) {
         document.getElementById("error_code").innerHTML =
             "Δεν έχεις δικαίωμα ψήφου."
-        //console.log("Δεν έχεις δικαίωμα ψήφου.")
     }
 }

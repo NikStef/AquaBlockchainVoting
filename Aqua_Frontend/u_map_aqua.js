@@ -4,16 +4,11 @@ import { abi, contractAddress } from "./constants.js"
 window.addEventListener("load", genesisAddress)
 window.addEventListener("load", genesisResults)
 
-// window.onload = (event) => {
-//     isConnected()
-// }
-
 async function genesisResults() {
     //console.log("hiiiii")
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send("eth_requestAccounts", [])
-        //const signer = provider.getSigner()
         const contract = new ethers.Contract(contractAddress, abi, provider)
         try {
             const result = await contract.isResults()
@@ -33,10 +28,8 @@ async function genesisAddress() {
         try {
             const accounts = await ethereum.request({ method: "eth_accounts" })
             if (!accounts.length) {
-                //console.log("Metamask is not connected")
                 window.location = "index.php"
             }
-            //console.log("15")
             const provider = new ethers.providers.Web3Provider(
                 window.ethereum,
                 "any"

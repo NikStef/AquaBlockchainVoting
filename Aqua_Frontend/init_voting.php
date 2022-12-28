@@ -52,12 +52,10 @@ input[type=text]{
 button {
 	width: 10%;
 	margin-left: 50px;  
-	
 	color: white;
 	padding: 10px 21px;
 	border: none;
 	cursor: pointer;
-	
 }
 
 fieldset {
@@ -84,21 +82,7 @@ button:hover {
 <body>
 <?php include 'u_map_aqua.php';?>
 
-<!-- <button id="setCandidateButton">Set Candidate</button>
-<label for ="setCandidate">Address</label>
-<input id="_addressCandidate" placeholder="0x00"/>
-<input id="_nameCandidate" placeholder="Name"/>
-
-<button id="setVoterButton">Set Voter</button>
-<label for ="setVoter">Address</label>
-<input id="_addressVoter" placeholder="0x00"/>
-<input id="_nameVoter" placeholder="Name"/>
-<button id="ChangePeriod">ChangePrd</button>
-<button id="Winner">Winner</button> 
- -->
-
-
- <fieldset id="set-only">
+<fieldset id="set-only">
     <div class="setfunctions">
       <div class=title>Λειτουργίες Καταχώρησης</div>
       <input type="text" id="_nameCandidate" placeholder="Όνομα Υποψηφίου"/>

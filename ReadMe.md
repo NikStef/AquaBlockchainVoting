@@ -42,4 +42,6 @@
 <h2><vr style="color:violet;">Version 1.5.0</vr>:</h2>
     <h3><p>Oλοκληρώθηκάν όλα τα tests 100% του συμβολαίου.</p><p></p></h3>
     <h2 align="center" style="color:red;">[TODO]:</h2>
-        <h3><p>1)Να καθαρίσω τον κώδικα απο comments.</p>
+        <h3><p>✓1)Να καθαρίσω τον κώδικα απο comments.</p>
+<h2><vr style="color:violet;">Version 1.5.1</vr>:</h2>
+    <h3><p>Καθαρίστηκαν τα σχόλια στο backend και στο frontend.</p><p></p></h3>
