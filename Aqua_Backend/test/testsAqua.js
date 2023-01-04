@@ -27,14 +27,14 @@ describe("Aqua", function () {
         const expectedValue = "3"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Shouldn't update after 3 function calls of changePeriod function and should revert with you are in the last stage", async function () {
+    it("Should ΝΟΤ update after 3 function calls of changePeriod and should revert with you are in the last stage", async function () {
         await Aqua.changePeriod()
         await Aqua.changePeriod()
         await expect(Aqua.changePeriod()).to.be.revertedWith(
             "You are in the last stage"
         )
     })
-    it("Shouldn't update the period if not owner account is calling", async function () {
+    it("Should ΝΟΤ update the period if not owner account is calling", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).changePeriod()
@@ -50,27 +50,26 @@ describe("Aqua", function () {
     //setCandidate()
     it("Should update the candidate list after a successful call of setCandidate", async function () {
         const [owner] = await ethers.getSigners()
-        //console.log(owner.address)
         await Aqua.setCandidate(owner.address, "Link")
         const currentValue = await Aqua.getCandidateLength()
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Shouldn't set a Candidate if the period is not Registration", async function () {
+    it("Should ΝΟΤ set a Candidate if the period is not Registration", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.changePeriod()
         await expect(
             Aqua.setCandidate(owner.address, "Link")
         ).to.be.revertedWith("It's not the registration period")
     })
-    it("Shouldn't set a candidate if the candidate already exists", async function () {
+    it("Should ΝΟΤ set a candidate if the candidate already exists", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await expect(
             Aqua.setCandidate(owner.address, "Link")
         ).to.be.revertedWith("Candidate already exists")
     })
-    it("Shouldn't update the candidate list if not the owner is calling the function setCandidate()", async function () {
+    it("Should ΝΟΤ update the candidate list if not the owner is calling the function setCandidate()", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).setCandidate(
@@ -88,34 +87,33 @@ describe("Aqua", function () {
     //setVoter()
     it("Should update the voter list after a successful call of setVoter", async function () {
         const [owner] = await ethers.getSigners()
-        //console.log(owner.address)
         await Aqua.setVoter(owner.address)
         const currentValue = await Aqua.getVoterLength()
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Shouldn't set a voter if the period is not Registration", async function () {
+    it("Should ΝΟΤ set a voter if the period is not Registration", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.changePeriod()
         await expect(Aqua.setVoter(owner.address)).to.be.revertedWith(
             "It's not the registration period"
         )
     })
-    it("Shouldn't set a voter if the voter already exists", async function () {
+    it("Should ΝΟΤ set a voter if the voter already exists", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.setVoter(owner.address)
         await expect(Aqua.setVoter(owner.address)).to.be.revertedWith(
             "The voter already exists."
         )
     })
-    it("Shouldn't update the voter list if not the owner is calling the function setVoter", async function () {
+    it("Should ΝΟΤ update the voter list if not the owner is calling the function setVoter", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).setVoter(otherAccount.address)
         ).to.be.revertedWith("Only initiator can do this")
     })
     //getInformation
-    it("Should getInformationif period is not correct", async function () {
+    it("Should ΝΟΤ getInformation if period is not ending", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -139,7 +137,7 @@ describe("Aqua", function () {
         const expectedValue = "1"
         assert.equal(currentValue.voteCount.toString(), expectedValue)
     })
-    it("Shouldnt vote twice", async function () {
+    it("Should ΝΟΤ vote twice", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -150,7 +148,7 @@ describe("Aqua", function () {
             "You have already voted"
         )
     })
-    it("Shouldnt vote outside of voting period", async function () {
+    it("Should ΝΟΤ vote outside of voting period", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -159,7 +157,7 @@ describe("Aqua", function () {
             "It's not the voting period"
         )
     })
-    it("Shouldnt vote if doesnt have a right to vote", async function () {
+    it("Should ΝΟΤ vote if doesn't have a right to vote", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setCandidate(user1.address, "Friv")
@@ -196,7 +194,7 @@ describe("Aqua", function () {
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Shouldn't calculate the winners twice", async function () {
+    it("Should ΝΟΤ calculate the winners twice", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -207,7 +205,7 @@ describe("Aqua", function () {
         await Aqua.getWinner()
         await expect(Aqua.getWinner()).to.be.revertedWith("Already calculated")
     })
-    it("Shouldn't calculate the winners outside of the correct period", async function () {
+    it("Should ΝΟΤ calculate the winners outside of the correct period", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)

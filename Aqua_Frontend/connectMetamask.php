@@ -31,8 +31,6 @@ h3{
 <body>
 <?php include 'map_aqua.php';?>
 
-
-
 <button  id="connectButton">Συνδεση στο Metamask</button>
 <h3 id="error_code"></h3>
 </body>

@@ -8,9 +8,9 @@ contract Aqua {
     address private vacant;
 
     uint256[] private endingVoteCounts;
-    uint pseudo_winnerVoteCount = 0;
-    uint _winner1 = 0;
-    uint _winner2 = 0;
+    uint256 private pseudo_winnerVoteCount = 0;
+    uint256 private _winner1 = 0;
+    uint256 private _winner2 = 0;
     uint256[] private winners;
     uint8 private results = 0;
     uint256 private totalVotes;
