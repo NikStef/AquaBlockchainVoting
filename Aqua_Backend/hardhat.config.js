@@ -20,7 +20,7 @@ module.exports = {
     networks: {
         goerli: {
             url: GOERLI_RPC_URL,
-            accounts: [PRIVATE_KEY], //edo mporeis na prostheseis k alla accounts
+            accounts: [PRIVATE_KEY],
             chainId: 5,
         },
         localhostgn: {

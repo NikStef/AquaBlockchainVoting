@@ -11,8 +11,8 @@ async function main() {
     // an kanei deploy sto goerli test net thelo to eherscan na to kanei verify
     if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) {
         console.log("Waiting for block confirmations...")
-        await aqua.deployTransaction.wait(6) //perimenei kapoia blocks 4
-        await verify(aqua.address, []) //edo kaloume to async verify
+        await aqua.deployTransaction.wait(6)
+        await verify(aqua.address, [])
     }
 }
 
