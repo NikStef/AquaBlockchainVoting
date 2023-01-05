@@ -9,32 +9,32 @@ describe("Aqua", function () {
     })
 
     //changePeriod()
-    it("Should start with period of registration", async function () {
+    it("1.Should start with period of registration", async function () {
         const currentValue = await Aqua.getState()
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should update period 1->2 with change period function", async function () {
+    it("2.Should update period 1->2 with change period function", async function () {
         await Aqua.changePeriod()
         const currentValue = await Aqua.getState()
         const expectedValue = "2"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should update period 2->3 with change period function", async function () {
+    it("3.Should update period 2->3 with change period function", async function () {
         await Aqua.changePeriod()
         await Aqua.changePeriod()
         const currentValue = await Aqua.getState()
         const expectedValue = "3"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should ΝΟΤ update after 3 function calls of changePeriod and should revert with you are in the last stage", async function () {
+    it("4.Should ΝΟΤ update after 3 function calls of changePeriod and should revert with you are in the last stage", async function () {
         await Aqua.changePeriod()
         await Aqua.changePeriod()
         await expect(Aqua.changePeriod()).to.be.revertedWith(
             "You are in the last stage"
         )
     })
-    it("Should ΝΟΤ update the period if not owner account is calling", async function () {
+    it("5.Should ΝΟΤ update the period if not owner account is calling", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).changePeriod()
@@ -42,34 +42,34 @@ describe("Aqua", function () {
     })
 
     //getCandidateLength()
-    it("Should start with 0 candidates", async function () {
+    it("6.Should start with 0 candidates", async function () {
         const currentValue = await Aqua.getCandidateLength()
         const expectedValue = "0"
         assert.equal(currentValue.toString(), expectedValue)
     })
     //setCandidate()
-    it("Should update the candidate list after a successful call of setCandidate", async function () {
+    it("7.Should update the candidate list after a successful call of setCandidate", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         const currentValue = await Aqua.getCandidateLength()
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should ΝΟΤ set a Candidate if the period is not Registration", async function () {
+    it("8.Should ΝΟΤ set a Candidate if the period is not Registration", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.changePeriod()
         await expect(
             Aqua.setCandidate(owner.address, "Link")
         ).to.be.revertedWith("It's not the registration period")
     })
-    it("Should ΝΟΤ set a candidate if the candidate already exists", async function () {
+    it("9.Should ΝΟΤ set a candidate if the candidate already exists", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await expect(
             Aqua.setCandidate(owner.address, "Link")
         ).to.be.revertedWith("Candidate already exists")
     })
-    it("Should ΝΟΤ update the candidate list if not the owner is calling the function setCandidate()", async function () {
+    it("10.Should ΝΟΤ update the candidate list if not the owner is calling the function setCandidate()", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).setCandidate(
@@ -79,41 +79,41 @@ describe("Aqua", function () {
         ).to.be.revertedWith("Only initiator can do this")
     })
     //getVoterLength()
-    it("Should start with 0 voters", async function () {
+    it("11.Should start with 0 voters", async function () {
         const currentValue = await Aqua.getVoterLength()
         const expectedValue = "0"
         assert.equal(currentValue.toString(), expectedValue)
     })
     //setVoter()
-    it("Should update the voter list after a successful call of setVoter", async function () {
+    it("12.Should update the voter list after a successful call of setVoter", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.setVoter(owner.address)
         const currentValue = await Aqua.getVoterLength()
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should ΝΟΤ set a voter if the period is not Registration", async function () {
+    it("13.Should ΝΟΤ set a voter if the period is not Registration", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.changePeriod()
         await expect(Aqua.setVoter(owner.address)).to.be.revertedWith(
             "It's not the registration period"
         )
     })
-    it("Should ΝΟΤ set a voter if the voter already exists", async function () {
+    it("14.Should ΝΟΤ set a voter if the voter already exists", async function () {
         const [owner] = await ethers.getSigners()
         await Aqua.setVoter(owner.address)
         await expect(Aqua.setVoter(owner.address)).to.be.revertedWith(
             "The voter already exists."
         )
     })
-    it("Should ΝΟΤ update the voter list if not the owner is calling the function setVoter", async function () {
+    it("15.Should ΝΟΤ update the voter list if not the owner is calling the function setVoter", async function () {
         const [owner, otherAccount] = await ethers.getSigners()
         await expect(
             Aqua.connect(otherAccount).setVoter(otherAccount.address)
         ).to.be.revertedWith("Only initiator can do this")
     })
     //getInformation
-    it("Should ΝΟΤ getInformation if period is not ending", async function () {
+    it("16.Should ΝΟΤ getInformation if period is not ending", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -125,7 +125,7 @@ describe("Aqua", function () {
         )
     })
     //vote
-    it("Should vote if a user has a right to vote", async function () {
+    it("17.Should vote if a user has a right to vote", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -137,7 +137,7 @@ describe("Aqua", function () {
         const expectedValue = "1"
         assert.equal(currentValue.voteCount.toString(), expectedValue)
     })
-    it("Should ΝΟΤ vote twice", async function () {
+    it("18.Should ΝΟΤ vote twice", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -148,7 +148,7 @@ describe("Aqua", function () {
             "You have already voted"
         )
     })
-    it("Should ΝΟΤ vote outside of voting period", async function () {
+    it("19.Should ΝΟΤ vote outside of voting period", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -157,7 +157,7 @@ describe("Aqua", function () {
             "It's not the voting period"
         )
     })
-    it("Should ΝΟΤ vote if doesn't have a right to vote", async function () {
+    it("20.Should ΝΟΤ vote if doesn't have a right to vote", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setCandidate(user1.address, "Friv")
@@ -167,7 +167,7 @@ describe("Aqua", function () {
         )
     })
     //getCandidateName
-    it("Should return the candidate name", async function () {
+    it("21.Should return the candidate name", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         const currentValue = await Aqua.getCandidateName("1")
@@ -175,13 +175,13 @@ describe("Aqua", function () {
         assert.equal(currentValue, expectedValue)
     })
     //isResults
-    it("Should start with results = 0", async function () {
+    it("22.Should start with results = 0", async function () {
         const currentValue = await Aqua.isResults()
         const expectedValue = "0"
         assert.equal(currentValue.toString(), expectedValue)
     })
     //getWinner
-    it("Should calculate the winners", async function () {
+    it("23.Should calculate the winners", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -194,7 +194,7 @@ describe("Aqua", function () {
         const expectedValue = "1"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should ΝΟΤ calculate the winners twice", async function () {
+    it("24.Should ΝΟΤ calculate the winners twice", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -205,7 +205,7 @@ describe("Aqua", function () {
         await Aqua.getWinner()
         await expect(Aqua.getWinner()).to.be.revertedWith("Already calculated")
     })
-    it("Should ΝΟΤ calculate the winners outside of the correct period", async function () {
+    it("25.Should ΝΟΤ calculate the winners outside of the correct period", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -217,7 +217,7 @@ describe("Aqua", function () {
         )
     })
     //getTotalVotes
-    it("Should calculate the correct number of votes", async function () {
+    it("26.Should calculate the correct number of votes", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -230,7 +230,7 @@ describe("Aqua", function () {
         const expectedValue = "2"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should calculate correct total votes in the extremities: example{voting with the same id}", async function () {
+    it("27.Should calculate correct total votes in the extremities: example{voting with the same id}", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -243,7 +243,7 @@ describe("Aqua", function () {
         const expectedValue = "2"
         assert.equal(currentValue.toString(), expectedValue)
     })
-    it("Should calculate correct total votes in the extremities: example{voting with double 0}", async function () {
+    it("28.Should calculate correct total votes in the extremities: example{voting with double 0}", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
@@ -257,14 +257,14 @@ describe("Aqua", function () {
         assert.equal(currentValue.toString(), expectedValue)
     })
     //getWinnersbyId
-    it("Should calculate the correct winners", async function () {
+    it("29.Should calculate the correct winners", async function () {
         const [owner, user1, user2] = await ethers.getSigners()
         await Aqua.setCandidate(owner.address, "Link")
         await Aqua.setVoter(owner.address)
         await Aqua.setVoter(user1.address)
         await Aqua.setCandidate(user1.address, "Friv")
         await Aqua.changePeriod()
-        Aqua.connect(user1).vote("1", "2")
+        await Aqua.connect(user1).vote("1", "2")
         await Aqua.vote("1", "0")
         await Aqua.changePeriod()
         await Aqua.getWinner()
