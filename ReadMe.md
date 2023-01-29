@@ -52,4 +52,4 @@ yarn
 - [@NikStef](https://github.com/NikStef)
 
 
-![Logo_Ending](/Aqua_Frontend/img/AquaLogo - Done(2).png)
+![Logo_Ending](/Aqua_Frontend/img/AquaLogoDone.png)
