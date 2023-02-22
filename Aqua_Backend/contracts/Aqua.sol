@@ -11,9 +11,12 @@ contract Aqua {
     uint256 private pseudo_winnerVoteCount = 0;
     uint256 private _winner1 = 0;
     uint256 private _winner2 = 0;
+    uint256 private _winner3 = 0;
     uint256[] private winners;
     uint8 private results = 0;
-    uint256 private totalVotes;
+
+    uint256 private totalVoterVote = 0;
+    uint256 private totalOfAVScore = 0;
 
     enum Period {
         Initialize,
@@ -44,6 +47,7 @@ contract Aqua {
         bool voter_voted;
         uint256 voter_vote1;
         uint256 voter_vote2;
+        uint256 voter_vote3;
     }
 
     address[] private votedVoters;
@@ -112,6 +116,7 @@ contract Aqua {
 
         voter.voter_vote1 = 1000;
         voter.voter_vote2 = 1000;
+        voter.voter_vote3 = 1000;
         voter.voter_voted = false;
         voterAddress.push(_address);
 
@@ -120,7 +125,8 @@ contract Aqua {
 
     function vote(
         uint256 _candidate1VoteId,
-        uint256 _candidate2VoteId
+        uint256 _candidate2VoteId,
+        uint256 _candidate3VoteId
     ) external {
         require(period == Period.Voting, "It's not the voting period");
         Voter storage voter = voters[msg.sender];
@@ -128,22 +134,28 @@ contract Aqua {
         require(!voter.voter_voted, "You have already voted");
         require(voter.voter_allowed != 0, "You have no right to vote");
 
-        if (!(_candidate1VoteId == _candidate2VoteId)) {
+        uint wave = candidateAddress.length - 1;
+        if (
+            (_candidate1VoteId > wave) ||
+            (_candidate2VoteId > wave) ||
+            (_candidate3VoteId > wave)
+        ) {
+            revert("Wrong ID vote, try again");
+        }
+        //votes
+        if (
+            (_candidate1VoteId == _candidate2VoteId) &&
+            (_candidate2VoteId == _candidate3VoteId)
+        ) {
             voter.voter_vote1 = _candidate1VoteId;
             candidates[_candidate1VoteId].voteCount =
                 candidates[_candidate1VoteId].voteCount +
                 1;
-
-            voter.voter_vote2 = _candidate2VoteId;
-            candidates[_candidate2VoteId].voteCount =
-                candidates[_candidate2VoteId].voteCount +
-                1;
-        } else if (
-            (_candidate1VoteId == _candidate2VoteId) && (_candidate1VoteId == 0)
-        ) {
-            voter.voter_vote1 = 0;
             voter.voter_vote2 = 0;
-            candidates[0].voteCount = candidates[0].voteCount + 1;
+            if (!(_candidate1VoteId == 0)) {
+                candidates[0].voteCount = candidates[0].voteCount + 1;
+            }
+            voter.voter_vote3 = 0;
         } else if (_candidate1VoteId == _candidate2VoteId) {
             voter.voter_vote1 = _candidate1VoteId;
             candidates[_candidate1VoteId].voteCount =
@@ -151,9 +163,66 @@ contract Aqua {
                 1;
 
             voter.voter_vote2 = 0;
-            candidates[0].voteCount = candidates[0].voteCount + 1;
-        }
+            if (!(_candidate1VoteId == 0)) {
+                candidates[0].voteCount = candidates[0].voteCount + 1;
+            }
 
+            voter.voter_vote3 = _candidate3VoteId;
+            if (!(_candidate3VoteId == 0)) {
+                candidates[_candidate3VoteId].voteCount =
+                    candidates[_candidate3VoteId].voteCount +
+                    1;
+            }
+        } else if (_candidate1VoteId == _candidate3VoteId) {
+            voter.voter_vote1 = _candidate1VoteId;
+            candidates[_candidate1VoteId].voteCount =
+                candidates[_candidate1VoteId].voteCount +
+                1;
+
+            voter.voter_vote2 = _candidate2VoteId;
+            if (!(_candidate2VoteId == 0)) {
+                candidates[_candidate2VoteId].voteCount =
+                    candidates[_candidate2VoteId].voteCount +
+                    1;
+            }
+
+            voter.voter_vote3 = 0;
+            if (!(_candidate3VoteId == 0)) {
+                candidates[0].voteCount = candidates[0].voteCount + 1;
+            }
+        } else if (_candidate2VoteId == _candidate3VoteId) {
+            voter.voter_vote1 = _candidate1VoteId;
+            if (!(_candidate1VoteId == 0)) {
+                candidates[_candidate1VoteId].voteCount =
+                    candidates[_candidate1VoteId].voteCount +
+                    1;
+            }
+
+            voter.voter_vote2 = _candidate2VoteId;
+            candidates[_candidate2VoteId].voteCount =
+                candidates[_candidate2VoteId].voteCount +
+                1;
+
+            voter.voter_vote3 = 0;
+            if (!(_candidate3VoteId == 0)) {
+                candidates[0].voteCount = candidates[0].voteCount + 1;
+            }
+        } else {
+            voter.voter_vote1 = _candidate1VoteId;
+            candidates[_candidate1VoteId].voteCount =
+                candidates[_candidate1VoteId].voteCount +
+                1;
+            voter.voter_vote2 = _candidate2VoteId;
+            candidates[_candidate2VoteId].voteCount =
+                candidates[_candidate2VoteId].voteCount +
+                1;
+
+            voter.voter_vote3 = _candidate3VoteId;
+            candidates[_candidate3VoteId].voteCount =
+                candidates[_candidate3VoteId].voteCount +
+                1;
+        }
+        totalVoterVote++;
         voter.voter_voted = true;
         votedVoters.push(msg.sender);
     }
@@ -161,10 +230,11 @@ contract Aqua {
     function getWinner() public onlyInitiator {
         require(period == Period.End, "It's not the ending period");
         require(results == 0, "Already calculated");
+
         for (uint x = 0; x < candidateAddress.length; x++) {
             endingVoteCounts.push(candidates[x].voteCount);
-            totalVotes = totalVotes + endingVoteCounts[x];
             endingVoteCounts[0] = 0;
+            totalOfAVScore = totalOfAVScore + endingVoteCounts[x];
 
             if ((endingVoteCounts[x] > pseudo_winnerVoteCount)) {
                 pseudo_winnerVoteCount = candidates[x].voteCount;
@@ -172,6 +242,7 @@ contract Aqua {
             }
         }
         winners.push(_winner1);
+
         pseudo_winnerVoteCount = 0;
         endingVoteCounts[_winner1] = 0;
 
@@ -182,6 +253,17 @@ contract Aqua {
             }
         }
         winners.push(_winner2);
+
+        pseudo_winnerVoteCount = 0;
+        endingVoteCounts[_winner2] = 0;
+
+        for (uint x = 0; x < candidateAddress.length; x++) {
+            if (endingVoteCounts[x] > pseudo_winnerVoteCount) {
+                pseudo_winnerVoteCount = endingVoteCounts[x];
+                _winner3 = x;
+            }
+        }
+        winners.push(_winner3);
         results = 1;
     }
 
@@ -214,8 +296,16 @@ contract Aqua {
         return results;
     }
 
-    function getTotalVotes() public view returns (uint256) {
-        return totalVotes;
+    function getTotalVotersVote() public view returns (uint256) {
+        return totalVoterVote;
+    }
+
+    function getTotalOfAVScore() public view returns (uint256) {
+        return totalOfAVScore;
+    }
+
+    function getNumOfIncompleteVotes() public view returns (uint256) {
+        return candidates[0].voteCount;
     }
 
     function getWinnersbyId(uint256 _index) public view returns (uint) {

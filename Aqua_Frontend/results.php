@@ -3,22 +3,26 @@
 <head>
 <style>
  body {font-family: Arial, Helvetica, sans-serif;}
+
  .democlass { text-align : left; }
+ 
 h2{
     font-weight: bold;
     margin-left: 350px;
 }
-table {
-  border-collapse: collapse;
-  margin-left: 350px;
+
+.eee{
+  text-align : left;
+  font-weight: bold;
+  font-size: 15px;
+  background: #eee;
 }
 
-
 table {
-    text-align: center;
-    margin-left: 350px;
-    margin-bottom: 60px;
-    border-collapse: collapse;
+  text-align: center;
+  margin-left: 350px;
+  margin-bottom: 60px;
+  border-collapse: collapse;
 }
  
 thead tr {
@@ -36,15 +40,22 @@ td, th{
 canvas{
   margin-left: 350px;
 }
+
+.wrap {
+  display: flex;
+}
+.secondtable{
+  align-self: start;
+}
+
 </style>
 
 </head>
 <body>
 <?php include 'u_map_aqua.php';?>
-<h2>Νικητές Ψηφοφορίας</h2>
+<h2>Νικητήρια επιτροπή</h2>
 <table class="styled-table">
 <thead>
- 
 <tr>
 <td>Όνομα:</td>
 <td>Id κωδικός:</td>
@@ -62,21 +73,40 @@ canvas{
     <td id="win2name" class="democlass"></td>
     <td id="win2"></td>
   </tr>
+  <tr>
+    <td id="win3name" class="democlass"></td>
+    <td id="win3"></td>
+  </tr>
 </tbody>
 </table>
 
 <h2>Αποτελέσματα Ψηφοφορίας</h2>
 
+
+<div class="wrap">
+<section class="firsttable">
 <table class="styled-table" id="poll">
 <thead>
   <tr>
     <td>Όνομα Υποψηφίου</td>
-    <td>Συνολικοί ψήφοι</td>
-    <td>Ψήφοι επί τοις 100%</td>
+    <td>AV-score</td>
   </tr>
   </thead>
-  
 </table>
+</section>
+
+
+<section class="secondtable">
+<table id="informations">
+    <tr><td class="eee">Εγγεγραμένοι Ψηφοφόροι:</td> <td id="VotLen"></td> </tr>
+    <tr><td class="eee">Ψήφοι:</td> <td id="VotVot"></td></tr>
+    <tr><td class="eee">Sum of AV-score:</td><td id="UniqueApprovals"></td></tr>
+    <tr><td class="eee">Num of Incomplete Preferences:</td><td id="Approvalsofzero"></td></tr>
+</table>
+</section>
+
+</div>
+
 
 <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 

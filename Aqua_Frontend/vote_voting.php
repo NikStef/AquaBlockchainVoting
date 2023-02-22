@@ -20,6 +20,7 @@
   margin-bottom: 20px;
   font-weight: bold;
   font-size: 15px;
+  display: inline-block;
 }
 
 input[type=text]{
@@ -80,13 +81,15 @@ h2{
     <div class="votelistcandidates" style="overflow-x:hidden;"> 
     <h2>Ψηφοφορία Aqua</h2>
       <ul id="list" >
-        <li>0.Λευκό</li>
       </ul> 
     </div>
     <div class="votefunctions">
-      <div class=title>Συμπλήρωσε τα id των υποψηφίων που θέλετε να εγκρίνεται, αν δεν θέλετε να εγκρίνεται κάποιον είσαγετε 0.</div>
+      <div class=title>Παρακαλώ, συμπληρώστε όλα τα πεδία με τους κωδικούς των υποψηφίων που θέλετε να εγκρίνεται.
+      </br>Αν δεν θέλετε να εγκρίνεται μία η περισσότερες επιλογές είσαγετε 0 στα κατάλληλα πεδία.</div>
+
       <input type="text" id="_id1" placeholder="Id του πρώτου υποψηφίου."/>
       <input type="text" id="_id2" placeholder="Id του δεύτερου υποψηφίου."/>
+      <input type="text" id="_id3" placeholder="Id του τρίτου υποψηφίου."/>
       <button type="button1" id="votes">Vote</button>
     </div>
   </fieldset>
